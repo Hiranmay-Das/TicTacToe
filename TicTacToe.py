@@ -131,8 +131,58 @@ class TicTacToe:
             self.board[option] = str(option)
         self.insertAtPosition(random.choice(options_left), self.player2)
 
+    # Function Name - miniMax
+    # Parameters - depth (Integer, stores the depth of the current recursion tree)
+    #              isMaximising (Boolean, store the current state of the mini-max, i.e. either maximising or minimising
+    # Return Type - Integer
+    # Function - Emulates every move that could be from the current state and returns a value based on the success or
+    #            failure of the maximizer or the minimizer in their respective cases. Returns the lowest score
+    #            possible if minimising, else returns the highest score possible if maximising, as all the moves
+    #            made must be assumed to be optimal.
+    def miniMax(self, depth, isMaximising):
+        if self.playerWon(self.player1):
+            return -10 + depth
+        if self.playerWon(self.player2):
+            return 10 - depth
+        if self.isBoardFull():
+            return 0
+        if isMaximising:
+            best_score = -math.inf
+            for i in range(1, 10):
+                if self.isPositionEmpty(i):
+                    self.board[i] = self.player2
+                    score = self.miniMax(depth + 1, False)
+                    best_score = max(best_score, score)
+                    self.board[i] = str(i)
+            return best_score
+        else:
+            best_score = math.inf
+            for i in range(1, 10):
+                if self.isPositionEmpty(i):
+                    self.board[i] = self.player1
+                    score = self.miniMax(depth + 1, True)
+                    best_score = min(best_score, score)
+                    self.board[i] = str(i)
+            return best_score
+
+    # Function Name - CPU_hardcore
+    # Parameters - None
+    # Return Type - None
+    # Function - Checks all the possible ways the game could play from the current state and calculates
+    #            the optimal move based on the mini-max algorithm.
     def CPU_hardcore(self):
-        pass
+        best_move = -1
+        high_score = -math.inf
+        for i in range(1, 10):
+            if self.isPositionEmpty(i):
+                self.board[i] = self.player2
+                score = self.miniMax(0, False)
+                self.board[i] = str(i)
+                if score > high_score:
+                    best_move = i
+                    high_score = score
+        self.board[best_move] = self.player2
+        return
 
     # Function Name - gameTime
     # Parameters - None
@@ -147,6 +197,7 @@ class TicTacToe:
         print("4. Computer - Hardcore")
         choice = input("Enter Choice : ")
         AI = {'2': 'easy', '3': 'intermediate', '4': 'hardcore'}
+        os.system("clear") if os.name == "posix" else os.system("cls")
         if choice == '1':
             self.playerVsplayer()
         else:
