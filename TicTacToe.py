@@ -1,5 +1,6 @@
 import os
 import math
+import random
 
 
 # Custom Exception to handle wrong input
@@ -16,8 +17,8 @@ class TicTacToe:
                       7: '7', 8: '8', 9: '9'}
         self.player1 = 'X'  # Symbol of First Player
         self.player2 = 'O'  # Symbol of Second Player
-        input("X plays first. \nPRESS ANY KEY TO START GAME\n")
-        os.system("clear") if os.name == "posix" else os.system("cls")
+        # input("X plays first. \nPRESS ANY KEY TO START GAME\n")
+        # os.system("clear") if os.name == "posix" else os.system("cls")
         self.gameTime()  # Start the Game
         input("Press any key to exit.")
         # self.cpu = 'O'
@@ -101,12 +102,63 @@ class TicTacToe:
                     continue
                 break
 
+    # Function Name - CPU_easy
+    # Parameters - None
+    # Return Type - None
+    # Function - Inserts symbol of the second player in a random empty spot
+    def CPU_easy(self):
+        options_left = [key for key, value in self.board.items() if value.isdigit()]
+        self.insertAtPosition(random.choice(options_left), self.player2)
+
+    # Function Name - CPU_intermediate
+    # Parameters - None
+    # Return Type - None
+    # Function - Checks if there exists any move where player 2 wins. If yes, then it takes it.
+    #            Otherwise, checks if there exists a spot where player 1 can win. If yes, then it blocks that move.
+    #            If neither are available, it places its symbol in a random grid.
+    def CPU_intermediate(self):
+        options_left = [key for key, value in self.board.items() if value.isdigit()]
+        for option in options_left:
+            self.board[option] = self.player2
+            if self.playerWon(self.player2):
+                return
+            self.board[option] = str(option)
+        for option in options_left:
+            self.board[option] = self.player1
+            if self.playerWon(self.player1):
+                self.board[option] = self.player2
+                return
+            self.board[option] = str(option)
+        self.insertAtPosition(random.choice(options_left), self.player2)
+
+    def CPU_hardcore(self):
+        pass
+
     # Function Name - gameTime
     # Parameters - None
     # Return Type - None
-    # Function - Initiates the game and proceeds till their is a clear winner or
-    #            there are no more moves to make (i.e. a tie) and declares the result
+    # Function - Takes input from user if they want to play against another player or CPU
+    #            and proceeds the game accordingly
     def gameTime(self):
+        print("SELECT OPPONENT")
+        print("1. 2nd Player")
+        print("2. Computer - Easy")
+        print("3. Computer - Intermediate")
+        print("4. Computer - Hardcore")
+        choice = input("Enter Choice : ")
+        AI = {'2': 'easy', '3': 'intermediate', '4': 'hardcore'}
+        if choice == '1':
+            self.playerVsplayer()
+        else:
+            self.playerVsCPU(AI[choice])
+
+    # Function Name - playerVsplayer
+    # Parameters - None
+    # Return Type - None
+    # Function - Emulates the game where both players are users and both give inputs sequentially.
+    #            Continues till there is a clear winner or there are no more moves to play (i.e. Tie)
+    #            Displays the result accordingly
+    def playerVsplayer(self):
         while True:
             if self.isBoardFull():
                 print("\n\nDRAW!")
@@ -119,6 +171,34 @@ class TicTacToe:
                 print("\n\nDRAW!")
                 break
             self.playerMove(self.player2)
+            if self.playerWon(self.player2):
+                print(f"\n\nPlayer 2 ({self.player2}) won. Congrats.")
+                break
+
+    # Function Name - playerVsCPU
+    # Parameters - level (String, represents the difficulty chosen by the user)
+    # Return Type - None
+    # Function - Emulates the game where player plays against the CPU.
+    #            Continues till there is a clear winner or there are no more moves to play (i.e. Tie)
+    #            Displays the result accordingly
+    def playerVsCPU(self, level):
+        while True:
+            if self.isBoardFull():
+                print("\n\nDRAW!")
+                break
+            self.playerMove(self.player1)
+            if self.playerWon(self.player1):
+                print(f"\n\nPlayer 1 ({self.player1}) won. Congrats.")
+                break
+            if self.isBoardFull():
+                print("\n\nDRAW!")
+                break
+            if level == 'easy':
+                self.CPU_easy()
+            elif level == 'intermediate':
+                self.CPU_intermediate()
+            elif level == 'hardcore':
+                self.CPU_hardcore()
             if self.playerWon(self.player2):
                 print(f"\n\nPlayer 2 ({self.player2}) won. Congrats.")
                 break

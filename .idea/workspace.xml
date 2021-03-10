@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a1d0d30-c67c-4f3c-bcc9-cd455858a6b1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TicTacToe.py" beforeDir="false" afterPath="$PROJECT_DIR$/TicTacToe.py" afterDir="false" />
     </list>
@@ -75,7 +74,7 @@
       <updated>1615282805031</updated>
       <workItem from="1615282815692" duration="2995000" />
       <workItem from="1615309601202" duration="3306000" />
-      <workItem from="1615362251204" duration="1916000" />
+      <workItem from="1615362251204" duration="5075000" />
     </task>
     <servers />
   </component>
@@ -87,28 +86,28 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="508" y="47" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1615364364105" />
-    <state width="1865" height="268" key="GridCell.Tab.0.bottom" timestamp="1615315458418">
+    <state width="1865" height="268" key="GridCell.Tab.0.bottom" timestamp="1615367174658">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="268" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1615315458418" />
-    <state width="1865" height="268" key="GridCell.Tab.0.center" timestamp="1615315458418">
+    <state width="1865" height="268" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1615367174658" />
+    <state width="1865" height="268" key="GridCell.Tab.0.center" timestamp="1615367174658">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="268" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1615315458418" />
-    <state width="1865" height="268" key="GridCell.Tab.0.left" timestamp="1615315458418">
+    <state width="1865" height="268" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1615367174658" />
+    <state width="1865" height="268" key="GridCell.Tab.0.left" timestamp="1615367174657">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="268" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1615315458418" />
-    <state width="1865" height="268" key="GridCell.Tab.0.right" timestamp="1615315458418">
+    <state width="1865" height="268" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1615367174657" />
+    <state width="1865" height="268" key="GridCell.Tab.0.right" timestamp="1615367174658">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="268" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1615315458418" />
+    <state width="1865" height="268" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1615367174658" />
     <state x="591" y="302" key="com.intellij.ide.util.TipDialog" timestamp="1615362251060">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="591" y="302" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615362251060" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/TicTacToe$TicTacToe.coverage" NAME="TicTacToe Coverage Results" MODIFIED="1615312030124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TicTacToe$TicTacToe.coverage" NAME="TicTacToe Coverage Results" MODIFIED="1615367172095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
