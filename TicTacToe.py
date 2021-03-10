@@ -17,11 +17,8 @@ class TicTacToe:
                       7: '7', 8: '8', 9: '9'}
         self.player1 = 'X'  # Symbol of First Player
         self.player2 = 'O'  # Symbol of Second Player
-        # input("X plays first. \nPRESS ANY KEY TO START GAME\n")
-        # os.system("clear") if os.name == "posix" else os.system("cls")
         self.gameTime()  # Start the Game
         input("Press any key to exit.")
-        # self.cpu = 'O'
 
     # Function Name - isBoardFull
     # Parameters - None
@@ -36,6 +33,27 @@ class TicTacToe:
     # Function - Returns True if passed position is empty, else Returns False.
     def isPositionEmpty(self, position):
         return self.board[position] in "123456789"
+
+    # Function Name - gameDraw
+    # Parameters - None
+    # Return Type - None
+    # Function - Prints Game drawn statement
+    def gameDraw(self):
+        os.system("clear") if os.name == "posix" else os.system("cls")
+        self.printBoard()
+        print("IT'S A DRAW!!\n")
+
+    # Function Name - gameWon
+    # Parameters - None
+    # Return Type - None
+    # Function - Prints Game won message, accordingly if its a PvP match or PvCPU match.
+    def gameWon(self, playerID, isCPU):
+        os.system("clear") if os.name == "posix" else os.system("cls")
+        self.printBoard()
+        if isCPU:
+            print(f"{playerID} has won. Better luck next time.\n")
+        else:
+            print(f"Congrats, {playerID} has won.")
 
     # Function Name - insertAtPosition
     # Parameters - position (Integer, holds a value within 1-9 representing a position on the board)
@@ -139,7 +157,7 @@ class TicTacToe:
     #            failure of the maximizer or the minimizer in their respective cases. Returns the lowest score
     #            possible if minimising, else returns the highest score possible if maximising, as all the moves
     #            made must be assumed to be optimal.
-    def miniMax(self, depth, isMaximising):
+    def miniMax(self, depth, isMaximising, alpha, beta):
         if self.playerWon(self.player1):
             return -10 + depth
         if self.playerWon(self.player2):
@@ -151,18 +169,24 @@ class TicTacToe:
             for i in range(1, 10):
                 if self.isPositionEmpty(i):
                     self.board[i] = self.player2
-                    score = self.miniMax(depth + 1, False)
+                    score = self.miniMax(depth + 1, False, alpha, beta)
                     best_score = max(best_score, score)
+                    alpha = max(alpha, best_score)
                     self.board[i] = str(i)
+                    if beta <= alpha:
+                        break
             return best_score
         else:
             best_score = math.inf
             for i in range(1, 10):
                 if self.isPositionEmpty(i):
                     self.board[i] = self.player1
-                    score = self.miniMax(depth + 1, True)
+                    score = self.miniMax(depth + 1, True, alpha, beta)
                     best_score = min(best_score, score)
+                    beta = min(beta, best_score)
                     self.board[i] = str(i)
+                    if beta <= alpha:
+                        break
             return best_score
 
     # Function Name - CPU_hardcore
@@ -176,7 +200,7 @@ class TicTacToe:
         for i in range(1, 10):
             if self.isPositionEmpty(i):
                 self.board[i] = self.player2
-                score = self.miniMax(0, False)
+                score = self.miniMax(0, False, -math.inf, math.inf)
                 self.board[i] = str(i)
                 if score > high_score:
                     best_move = i
@@ -196,62 +220,39 @@ class TicTacToe:
         print("3. Computer - Intermediate")
         print("4. Computer - Hardcore")
         choice = input("Enter Choice : ")
-        AI = {'2': 'easy', '3': 'intermediate', '4': 'hardcore'}
+        AI = {'1': 'player', '2': 'easy', '3': 'intermediate', '4': 'hardcore'}
         os.system("clear") if os.name == "posix" else os.system("cls")
-        if choice == '1':
-            self.playerVsplayer()
-        else:
-            self.playerVsCPU(AI[choice])
+        self.startGame(AI[choice])
 
-    # Function Name - playerVsplayer
-    # Parameters - None
+    # Function Name - startGame
+    # Parameters - level (String, stores the type of opponent the player faces)
     # Return Type - None
-    # Function - Emulates the game where both players are users and both give inputs sequentially.
-    #            Continues till there is a clear winner or there are no more moves to play (i.e. Tie)
-    #            Displays the result accordingly
-    def playerVsplayer(self):
+    # Function - Emulates the game either with 2-players or a single player against a bot
+    #            of varying difficulties. Continues till there is a clear winner or there are
+    #            no more moves to play. Displays the result accordingly.
+    def startGame(self, level):
+        isCPU = (level != 'player')
         while True:
             if self.isBoardFull():
-                print("\n\nDRAW!")
+                self.gameDraw()
                 break
             self.playerMove(self.player1)
             if self.playerWon(self.player1):
-                print(f"\n\nPlayer 1 ({self.player1}) won. Congrats.")
+                self.gameWon(self.player1, False)
                 break
             if self.isBoardFull():
-                print("\n\nDRAW!")
+                self.gameDraw()
                 break
-            self.playerMove(self.player2)
-            if self.playerWon(self.player2):
-                print(f"\n\nPlayer 2 ({self.player2}) won. Congrats.")
-                break
-
-    # Function Name - playerVsCPU
-    # Parameters - level (String, represents the difficulty chosen by the user)
-    # Return Type - None
-    # Function - Emulates the game where player plays against the CPU.
-    #            Continues till there is a clear winner or there are no more moves to play (i.e. Tie)
-    #            Displays the result accordingly
-    def playerVsCPU(self, level):
-        while True:
-            if self.isBoardFull():
-                print("\n\nDRAW!")
-                break
-            self.playerMove(self.player1)
-            if self.playerWon(self.player1):
-                print(f"\n\nPlayer 1 ({self.player1}) won. Congrats.")
-                break
-            if self.isBoardFull():
-                print("\n\nDRAW!")
-                break
-            if level == 'easy':
+            if level == 'player':
+                self.playerMove(self.player2)
+            elif level == 'easy':
                 self.CPU_easy()
             elif level == 'intermediate':
                 self.CPU_intermediate()
             elif level == 'hardcore':
                 self.CPU_hardcore()
             if self.playerWon(self.player2):
-                print(f"\n\nPlayer 2 ({self.player2}) won. Congrats.")
+                self.gameWon(self.player2, isCPU)
                 break
 
 
